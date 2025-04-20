@@ -1,0 +1,125 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+  <div class="container-fluid nav-custom-container">
+    <img
+      class="logo me-2"
+      src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png"
+      alt=""
+    />
+    <h1 class="fs-1 nav-titulo fw-bold">KIRBBO</h1>
+
+    <button
+      class="navbar-toggler btn-nav"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Menú alineado a la derecha -->
+      <ul class="navbar-nav ms-auto ul-nav-container">
+        <li class="nav-item">
+          <a
+            class="nav-link fs-3 fw-bold"
+            routerLink="home"
+            routerLinkActive="active"
+            >INICIO</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link fs-3 fw-bold"
+            routerLink="productos"
+            routerLinkActive="active"
+            >PRODUCTOS</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link fs-3 fw-bold"
+            routerLink="carrito"
+            routerLinkActive="active"
+            >CARRITO</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="nombreUsuario">
+          <a
+            class="nav-link fs-3 fw-bold"
+            routerLink="/inicio/pedidos"
+            routerLinkActive="active"
+            >MIS PEDIDOS</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="!nombreUsuario">
+          <a
+            routerLink="/inicio/login"
+            routerLinkActive="active"
+            class="nav-link fs-3 fw-bold"
+            >INICIAR SESIÓN</a
+          >
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="nombreUsuario">
+          <a
+            class="nav-link dropdown-toggle d-flex align-items-center gap-2 fs-3 fw-semibold"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span>{{ nombreUsuario }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <!--
+            <li>
+              <h6 class="dropdown-header text-muted">Cuenta</h6>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Perfil</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            -->
+            <li>
+              <a class="dropdown-item text-danger fw-bold cerrar" (click)="logout()"
+                >Cerrar sesión</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Fin Navbar -->
+<router-outlet></router-outlet>
+<!-- FOTTER INICIO -->
+<div
+  class="container-fluid footer-container text-center pb-3 mt-5 text-white d-flex flex-column"
+>
+  <h5 class="fs-2 fw-bold mt-4">Special title treatment</h5>
+  <p class="footer-p">
+    With supporting text below as a natural lead-in to additional content.
+  </p>
+  <img
+    class="img-fluid logo"
+    src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png"
+    alt=""
+  />
+  <p class="footer-p">2024 © KIRBBO. Todos los Derechos Reservados</p>
+</div>
+<!-- Ícono de carrito de compras -->
+<a
+  class="nav-link fs-3 fw-bold"
+  routerLink="carrito"
+  routerLinkActive="active"
+  class="cart-icon"
+>
+  <i class="fas fa-shopping-cart"></i>
+  <span class="cart-count">{{ totalProductos }}</span>
+  <!-- Contador de artículos -->
+</a>
+<!-- FOOTER FIN -->

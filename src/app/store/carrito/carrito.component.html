@@ -1,0 +1,196 @@
+<!-- MAIN INICIO -->
+<div class="container text-center mt-5">
+  <h1 class="fs-1 fw-bold">ORDENAR</h1>
+  <div>
+    <h2 class="fs-2 fw-bold text-start subt">CARRITO DE COMPRAS</h2>
+
+    <!-- Si el carrito está vacío -->
+    <div class="bg-light" *ngIf="carrito.length === 0">
+      <img
+        class="logo m-3"
+        src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png"
+      />
+      <h1 class="fs-3 text-danger">
+        Su carrito de compras está vacío, por favor agregue artículos a su orden
+      </h1>
+    </div>
+
+    <!-- Si hay productos en el carrito -->
+    <div class="bg-light" *ngIf="carrito.length > 0">
+      <div class="overflow-auto">
+        <table class="table tabla">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">#</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Precio regular</th>
+              <th scope="col">Descuento</th>
+              <th scope="col">Precio descuento</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Importe</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Ejemplo de un producto -->
+            <tr *ngFor="let detalle of carrito" class="text-center">
+              <th scope="row">
+                <img class="img-cart" src="assets/images/image.png" alt="" />
+              </th>
+              <td>{{ detalle.producto.nombre }}</td>
+              <td>S/{{ detalle.producto.precio | number : "1.2-2" }}</td>
+              <td>{{ detalle.producto.descuento }}%</td>
+              <td class="fw-bold">
+                S/.{{
+                  calcularPrecioFinal(detalle.producto) | number : "1.2-2"
+                }}
+              </td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <input
+                    [(ngModel)]="detalle.cantidad"
+                    name="cantidad-{{ detalle.producto.id }}"
+                    class="text-center input-number-custom fw-bold"
+                    type="number"
+                    [min]="1"
+                    [max]="detalle.producto.stock"
+                  />
+                  <button
+                    (click)="
+                      editarCantidad(detalle.producto.id, detalle.cantidad)
+                    "
+                    class="btn btn-warning ms-2"
+                  >
+                    Editar
+                  </button>
+                </div>
+              </td>
+              <td class="fw-bold">
+                S/.{{ calcularImporte(detalle) | number : "1.2-2" }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-danger"
+                  (click)="eliminarProducto(detalle.producto.id)"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-end contenedor-pago">
+        <div class="overflow-auto">
+          <table class="table tabla tabla-dir">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">Dirección de envío</th>
+                <th scope="col">Cantidad de artículos</th>
+                <th scope="col">Total</th>
+                <th scope="col">Procesar compra</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <th>
+                  <div class="d-flex justify-content-center">
+                    <form action="editarPedidoAddress" method="post">
+                      <input
+                        name="address"
+                        class="text-center input-dic-custom fw-bold"
+                        type="text"
+                        value="Av. Ejemplo 123"
+                        required
+                      />
+                      <button type="submit" class="btn btn-warning ms-2">
+                        Editar
+                      </button>
+                    </form>
+                    <form action="reestablecerPedidoAddress" method="post">
+                      <button type="submit" class="btn btn-secondary ms-2">
+                        Reestablecer
+                      </button>
+                    </form>
+                  </div>
+                </th>
+                <th>3</th>
+                <td class="fw-bold">
+                  S/.{{ calcularTotal() | number : "1.2-2" }}
+                </td>
+                <td>
+                  <button class="btn btn-success" (click)="procesarCompra()">
+                    Procesar compra
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mensaje adicional -->
+      <div class="alert alert-dark">Mensaje adicional aquí</div>
+
+      <!-- Si no ha iniciado sesión -->
+      <div class="alert alert-info text-center" role="alert">
+        Debe <a href="#" class="alert-link">Iniciar Sesión</a> para poder
+        procesar su orden.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MAIN FIN -->
+
+<div class="container text-center mt-5">
+  <h2 class="fs-2 fw-bold text-start subt">RECOMENDADOS</h2>
+  <div class="container-fluid main-grid">
+    <div class="container mt-5">
+      <ul class="article-grid">
+        <!--COMPONENTE-->
+        <li
+          *ngFor="let producto of productosDestacados"
+          class="card card-custom overflow-hidden"
+        >
+          <!-- Badge de descuento -->
+          <div *ngIf="producto.descuento" class="discount-badge rounded-pill">
+            <span>{{ producto.descuento }}% OFF</span>
+          </div>
+
+          <!-- Imagen -->
+          <img src="assets/images/image.png" alt="{{ producto.nombre }}" />
+
+          <div class="card-body cb">
+            <!-- Nombre del producto -->
+            <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
+
+            <!-- Precio -->
+            <p class="text-dark font-monospace fs-4">
+              <span *ngIf="producto.descuento" class="precio-anterior">
+                S/.{{ producto.precio | number : "1.2-2" }}
+              </span>
+              <strong>
+                S/.
+                {{
+                  producto.descuento
+                    ? producto.precio * (1 - producto.descuento / 100)
+                    : (producto.precio | number : "1.2-2")
+                }}
+              </strong>
+            </p>
+
+            <!-- Botón -->
+            <a
+              class="btn btn-custom rounded-pill"
+              [routerLink]="'/inicio/producto/' + producto.id"
+            >
+              COMPRAR
+            </a>
+          </div>
+        </li>
+        <!--FIN COMPONENTE-->
+      </ul>
+    </div>
+  </div>
+</div>

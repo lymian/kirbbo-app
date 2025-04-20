@@ -1,1 +1,281 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: "Montserrat", sans-serif;
+}
+.cb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-custom-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: rgb(103, 29, 40);
+  justify-content: center !important;
+}
+.ul-nav-container {
+  align-items: center;
+}
+.nav-titulo {
+  color: rgb(255, 203, 207);
+  margin-right: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.navbar-brand {
+  color: rgb(255, 203, 207);
+}
+.btn-nav {
+  background-color: rgb(255, 203, 207);
+  margin-bottom: 10px;
+}
+.nav-link {
+  color: rgb(255, 203, 207);
+  transition: color 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.activo {
+  color: rgb(246, 219, 162);
+}
+.custom-navbar {
+  height: 100px; /* Ajusta este valor para cambiar la altura */
+  z-index: 2000;
+}
+
+.navbar-brand,
+.nav-link {
+  line-height: 50px; /* Alinea el texto verticalmente */
+  display: flex;
+  align-items: center;
+}
+/**/
+.custom-navbar {
+  background-color: rgb(103, 29, 40);
+  height: 100px;
+  z-index: 2000;
+}
+
+.custom-navbar .nav-link:hover {
+  color: rgb(246, 219, 162);
+}
+.navbar-collapse {
+  background-color: rgb(103, 29, 40);
+}
+/**/
+.custom-banner {
+  background-color: rgb(236, 236, 236);
+  color: rgb(0, 0, 0);
+}
+.banner {
+  background-color: rgb(243, 243, 243);
+}
+.banner1 {
+  align-content: center;
+}
+.banner-scroll {
+  gap: 40px;
+}
+/**/
+.btn-custom {
+  background-color: rgb(103, 29, 40);
+  color: #fff;
+}
+.btn-custom:hover {
+  color: #fff;
+  background-color: rgb(83, 24, 33);
+}
+/**/
+.logo {
+  max-height: 80px;
+  align-self: center;
+  width: auto;
+}
+/* asd*/
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  justify-items: center;
+}
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgb(103, 29, 40);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 1;
+  box-shadow: 0px 5px 5px 0px #00000050;
+}
+.precio-anterior {
+  text-decoration: line-through;
+  color: #999; /* Color gris para indicar que es un precio anterior */
+  font-size: 1rem; /* Tamaño ligeramente más pequeño */
+}
+.card-custom {
+  max-width: 350px;
+  border-radius: 0px;
+  border: none;
+  box-shadow: 0px 5px 5px 0px #00000050;
+}
+.card-custom-banner {
+  min-width: 350px;
+  border: none;
+  box-shadow: 0px 5px 5px 0px #00000050;
+}
+/**/
+.footer-container {
+  background-color: rgb(103, 29, 40);
+}
+/**/
+.carousel-item {
+  padding: 15px;
+  text-align: center;
+}
+
+.carousel-item button {
+  margin: 0 10px; /* Espacio entre botones */
+}
+
+.carousel-item.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/**/
+/* Personalizar el thumb (la parte que se mueve) */
+.categorias {
+  gap: 10px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(103, 29, 40); /* Color del thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(70, 22, 29); /* Color del thumb al pasar el cursor */
+}
+
+/* Personalizar el track (el fondo de la barra de desplazamiento) */
+::-webkit-scrollbar-track {
+  background-color: #ecf0f1; /* Color del track */
+}
+/**/
+.subt {
+  border-bottom: solid rgb(103, 29, 40);
+}
+.tabla {
+  text-align: justify;
+  vertical-align: middle;
+  flex-basis: content;
+}
+.img-cart {
+  max-height: 100px;
+  width: auto;
+}
+.input-number-custom {
+  max-width: 150px;
+  border: solid rgb(103, 29, 40);
+}
+.input-dic-custom {
+  width: 400px;
+  border: solid rgb(103, 29, 40);
+}
+.input-number-custom :hover {
+  border: solid rgb(103, 29, 40);
+}
+.contenedor-pago {
+  display: flex;
+  justify-content: flex-end; /* Alinea al final del contenedor */
+}
+.tabla-dir {
+  min-width: max-content;
+}
+.subt-pedido {
+  border-bottom: solid 1px rgb(0, 0, 0);
+}
+.pedido-actual {
+  background-color: rgb(255, 223, 225);
+}
+
+.cart-icon {
+  position: fixed; /* Posición fija en la ventana */
+  bottom: 20px; /* A 20px del fondo */
+  right: 20px; /* A 20px de la derecha */
+  background-color: rgb(253, 132, 142); /* Color de fondo */
+  color: white; /* Color del ícono */
+  border-radius: 50%; /* Bordes redondeados */
+  padding: 15px; /* Espacio interno */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  transition: background-color 0.4s; /* Transición para hover */
+}
+.cart-icon:hover {
+  background-color: rgb(158, 76, 83); /* Color de fondo al pasar el mouse */
+}
+.cart-count {
+  position: absolute; /* Posición absoluta */
+  top: -5px; /* Ajuste desde la parte superior del ícono */
+  right: -5px; /* Ajuste desde la derecha del ícono */
+  background-color: red; /* Color de fondo del contador */
+  color: white; /* Color del texto del contador */
+  border-radius: 50%; /* Bordes redondeados */
+  padding: 5px 10px; /* Espacio interno */
+  font-size: 0.8em; /* Tamaño del texto */
+  min-width: 20px; /* Ancho mínimo */
+  text-align: center; /* Centrar el texto */
+}
+.login-container {
+  /* Hace que el contenedor ocupe toda la altura de la ventana */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+}
+.login-box {
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para el formulario */
+  background-color: white; /* Fondo blanco para el formulario */
+}
+.signup-container {
+  /* Hace que el contenedor ocupe toda la altura de la ventana */
+  max-width: 700px;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+}
+
+.btn-custom.active {
+  background-color: #303030; /* rosa fuerte */
+  color: white;
+  border: none;
+}
+
+.swal-custom-login {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  max-width: 300px; /* Ajusta el ancho máximo según sea necesario */
+  max-height: 350px;
+  color: black;
+}
+
+.swal-image-on-top {
+  order: 0; /* Mueve la imagen arriba */
+}
+.kirbi{
+  background-color: rgb(244, 204, 204);
+}

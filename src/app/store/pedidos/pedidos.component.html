@@ -1,0 +1,69 @@
+<div class="container text-center mt-5">
+  <h1 class="fs-1 fw-bold">SUS PEDIDOS</h1>
+  <h2 class="fs-2 fw-bold text-start subt">HISTORIAL DE PEDIDOS</h2>
+
+  <div *ngFor="let boleta of historial" class="mb-4">
+    <div class="card shadow-sm border-0 animate-fade-in mt-3">
+      <!-- Card Header -->
+      <div
+        class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+      >
+        <h5 class="mb-0">
+          Boleta #{{ boleta.boletaId }} - {{ boleta.nombreCliente }}
+          {{ boleta.apellidoCliente }}
+        </h5>
+        <span class="badge bg-light text-dark">{{
+          boleta.fechaEmision | date : "shortDate"
+        }}</span>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p class="mb-1">
+              <strong>Fecha de Emisión:</strong>
+              {{ boleta.fechaEmision | date : "medium" }}
+            </p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="mb-1">
+              <strong>Total:</strong> S/ {{ boleta.total | number : "1.2-2" }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead class="table-light cabeza">
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col" class="text-center">Cantidad</th>
+                <th scope="col" class="text-end">Precio Unitario</th>
+                <th scope="col" class="text-end">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detalle of boleta.detalles" class="animate-row">
+                <td>{{ detalle.nombreProducto }}</td>
+                <td class="text-center">{{ detalle.cantidad }}</td>
+                <td class="text-end">
+                  S/ {{ detalle.precioUnitario | number : "1.2-2" }}
+                </td>
+                <td class="text-end">
+                  S/ {{ detalle.subtotal | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer text-muted text-end">
+        <small>Generado por Sistema de Ventas</small>
+      </div>
+    </div>
+  </div>
+</div>

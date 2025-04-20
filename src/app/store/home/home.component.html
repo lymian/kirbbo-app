@@ -1,0 +1,109 @@
+<!-- BANNER START -->
+<div class="container-fluid custom-banner p-0 m-0">
+  <div class="container-fluid row m-0 pt-5 pb-3 pe-0">
+    <!-- Columna 1, ocupa 1/4 del ancho (proporción 1) -->
+    <div class="col-12 col-md-3 p-3 banner1">
+      <div class="ms-5">
+        <h2 class="fs-1 fw-bold">LOS FAVORITOS DE LA CASA</h2>
+        <p class="fs-5">Una experiencia dulce que no querrás perderte</p>
+      </div>
+    </div>
+    <!-- Columna 2, ocupa 3/4 del ancho (proporción 3) -->
+    <div class="col-12 col-md-9 text-white pe-0">
+      <div class="d-flex overflow-auto text-center banner-scroll">
+        <li
+          *ngFor="let producto of productosDestacados"
+          class="card card-custom-banner overflow-hidden mb-4"
+        >
+          <div
+            class="discount-badge rounded-pill"
+            *ngIf="producto.descuento && producto.descuento > 0"
+          >
+            <span>{{ producto.descuento }}% OFF</span>
+          </div>
+
+          <img src="assets/images/image.png" class="" [alt]="producto.nombre" />
+
+          <div class="card-body cb">
+            <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
+            <p class="text-dark font-monospace fs-4">
+              <span
+                class="precio-anterior"
+                *ngIf="producto.descuento && producto.descuento > 0"
+              >
+                S/.{{ producto.precio | number : "1.2-2" }}
+              </span>
+              <strong>
+                S/.{{
+                  producto.descuento
+                    ? (producto.precio * (1 - producto.descuento / 100)
+                      | number : "1.2-2")
+                    : (producto.precio | number : "1.2-2")
+                }}
+              </strong>
+            </p>
+            <a
+              [routerLink]="'/inicio/producto/' + producto.id"
+              class="btn btn-custom rounded-pill"
+            >
+              COMPRAR
+            </a>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- BANNER FIN -->
+<!-- MAIN INICIO -->
+<div class="container text-center mt-5">
+  <h1 class="fs-1 fw-bold">PROMOCIONES</h1>
+  <h2 class="fs-2 fw-bold text-start subt">DESTACADOS</h2>
+  <div class="container-fluid main-grid bg-light pt-1">
+    <div class="container mt-5">
+      <ul class="article-grid">
+        <li
+          *ngFor="let producto of productosDestacados"
+          class="card card-custom overflow-hidden"
+        >
+          <!-- Badge de descuento -->
+          <div *ngIf="producto.descuento" class="discount-badge rounded-pill">
+            <span>{{ producto.descuento }}% OFF</span>
+          </div>
+
+          <!-- Imagen -->
+          <img src="assets/images/image.png" alt="{{ producto.nombre }}" />
+
+          <div class="card-body cb">
+            <!-- Nombre del producto -->
+            <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
+
+            <!-- Precio -->
+            <p class="text-dark font-monospace fs-4">
+              <span *ngIf="producto.descuento" class="precio-anterior">
+                S/.{{ producto.precio | number : "1.2-2" }}
+              </span>
+              <strong>
+                S/.
+                {{
+                  producto.descuento
+                    ? producto.precio * (1 - producto.descuento / 100)
+                    : (producto.precio | number : "1.2-2")
+                }}
+              </strong>
+            </p>
+
+            <!-- Botón -->
+            <a
+              class="btn btn-custom rounded-pill"
+              [routerLink]="'/inicio/producto/' + producto.id"
+            >
+              COMPRAR
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- MAIN FIN -->

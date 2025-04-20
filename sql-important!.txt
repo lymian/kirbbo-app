@@ -1,0 +1,269 @@
+USE master
+
+DROP DATABASE kirboo
+
+create database kirboo
+
+use kirboo
+
+CREATE TABLE Categoria (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL
+);
+CREATE TABLE Producto (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(255) NOT NULL,
+    Precio DECIMAL(10, 2) NOT NULL,
+    Stock INT NOT NULL DEFAULT 0,
+    Descuento INT,
+	Estado BIT NOT NULL DEFAULT 1,
+    CategoriaId INT NOT NULL,
+    FOREIGN KEY (CategoriaId) REFERENCES Categoria(Id)
+);
+CREATE TABLE Usuarios (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Rol VARCHAR(20) NOT NULL,
+	Estado BIT NOT NULL DEFAULT 1
+);
+CREATE TABLE Cliente (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Apellido VARCHAR(100) NOT NULL,
+    Correo VARCHAR(255) UNIQUE,
+    Telefono VARCHAR(20),
+	UsuarioId INT NOT NULL,
+	FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id)
+);
+-- Tabla Boleta (Encabezado de la boleta)
+CREATE TABLE Boleta (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ClienteId INT NOT NULL,
+    FechaEmision DATETIME NOT NULL DEFAULT GETDATE(),
+    Total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (ClienteId) REFERENCES Cliente(Id)
+);
+
+-- Tabla DetalleBoleta (Ítems de la boleta)
+CREATE TABLE DetalleBoleta (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    BoletaId INT NOT NULL,
+    ProductoId INT NOT NULL,
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(10, 2) NOT NULL,
+    Subtotal DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (BoletaId) REFERENCES Boleta(Id),
+    FOREIGN KEY (ProductoId) REFERENCES Producto(Id)
+);
+
+INSERT INTO Categoria (Nombre) VALUES ('Electrónicos'),('Ropa'),('Libros'),('Alimentos'),('Deportes');
+
+-- Insert para la categoría 'Electrónicos'
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Smartphone Galaxy S23', 999.99, 50, 10, 1);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Laptop Dell XPS 15', 1499.00, 30, 0, 1);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Smart TV Samsung 55"', 699.50, 40, 5, 1);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Audífonos Sony WH-1000XM5', 349.00, 60, 0, 1);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Tablet iPad Air', 599.00, 25, 15, 1);
+
+-- Insert para la categoría 'Ropa'
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Camiseta Algodón Hombre', 25.00, 100, 0, 2);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Pantalón Jeans Mujer', 45.50, 80, 20, 2);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Vestido Verano Floral', 39.99, 70, 0, 2);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Zapatillas Deportivas Nike', 89.95, 90, 10, 2);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Chaqueta Cuero Sintético', 75.00, 55, 0, 5);
+
+-- Insert para la categoría 'Libros'
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Cien años de soledad', 15.75, 120, 0, 3);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('El Señor de los Anillos', 22.00, 95, 5, 3);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Orgullo y prejuicio', 12.50, 110, 0, 3);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Harry Potter y la piedra filosofal', 18.90, 105, 10, 3);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Matar un ruiseñor', 14.20, 85, 0, 3);
+
+-- Insert para la categoría 'Alimentos'
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Arroz Blanco (1kg)', 2.50, 200, 0, 4);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Leche Entera (1L)', 1.80, 150, 5, 4);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Pan Integral (Paquete)', 3.20, 130, 0, 4);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Huevos (Docena)', 4.50, 180, 10, 4);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Manzanas (1kg)', 2.80, 160, 0, 4);
+
+-- Insert para la categoría 'Deportes'
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Balón de Fútbol Profesional', 35.00, 75, 0, 5);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Raqueta de Tenis Wilson', 79.99, 45, 15, 5);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Pesas (Set de 5kg)', 49.00, 65, 0, 5);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Bicicleta de Montaña', 299.00, 35, 10, 5);
+INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId) VALUES ('Colchoneta de Yoga', 19.50, 90, 0, 5);
+
+-- Procedimientos
+CREATE PROCEDURE sp_InsertarProducto
+    @Nombre VARCHAR(100),
+    @Precio DECIMAL(18,2),
+    @Stock INT,
+    @Descuento INT,
+    @CategoriaId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Producto (Nombre, Precio, Stock, Descuento, CategoriaId)
+    VALUES (@Nombre, @Precio, @Stock, @Descuento, @CategoriaId);
+
+    DECLARE @NuevoId INT = SCOPE_IDENTITY();
+
+    SELECT *
+    FROM Producto
+    WHERE Id = @NuevoId;
+END
+
+--
+CREATE PROCEDURE sp_RegistrarUsuarioYCliente
+    @Username VARCHAR(50),
+    @PasswordHash VARCHAR(255),
+    @Rol VARCHAR(20),
+    @Nombre VARCHAR(100),
+    @Apellido VARCHAR(100),
+    @Correo VARCHAR(255),
+    @Telefono VARCHAR(20),
+    @Resultado BIT OUTPUT,
+    @Mensaje NVARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Verificamos si el username ya existe
+        IF EXISTS (SELECT 1 FROM Usuarios WHERE Username = @Username)
+        BEGIN
+            SET @Resultado = 0;
+            SET @Mensaje = 'El nombre de usuario ya está en uso.';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -- Insertar en Usuarios
+        INSERT INTO Usuarios (Username, PasswordHash, Rol)
+        VALUES (@Username, @PasswordHash, @Rol);
+
+        DECLARE @UsuarioId INT = SCOPE_IDENTITY();
+
+        -- Insertar en Cliente
+        INSERT INTO Cliente (Nombre, Apellido, Correo, Telefono, UsuarioId)
+        VALUES (@Nombre, @Apellido, @Correo, @Telefono, @UsuarioId);
+
+        COMMIT TRANSACTION;
+
+        SET @Resultado = 1;
+        SET @Mensaje = 'Registro exitoso.';
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        SET @Resultado = 0;
+        SET @Mensaje = ERROR_MESSAGE();
+    END CATCH
+END
+--
+CREATE PROCEDURE ActualizarProducto
+    @Id INT,
+    @Nombre VARCHAR(255),
+    @Precio DECIMAL(10,2),
+    @Stock INT,
+    @Descuento INT,
+    @CategoriaId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Verifica si el producto existe
+    IF NOT EXISTS (SELECT 1 FROM Producto WHERE Id = @Id)
+    BEGIN
+        RAISERROR('El producto con el ID especificado no existe.', 16, 1);
+        RETURN;
+    END
+
+    -- Actualiza el producto
+    UPDATE Producto
+    SET Nombre = @Nombre,
+        Precio = @Precio,
+        Stock = @Stock,
+        Descuento = @Descuento,
+        CategoriaId = @CategoriaId
+    WHERE Id = @Id;
+
+    -- Opcional: devolver el producto actualizado
+    SELECT * FROM Producto WHERE Id = @Id;
+END;
+--
+CREATE PROCEDURE EliminarProducto
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Verificar si el producto existe
+    IF NOT EXISTS (SELECT 1 FROM Producto WHERE Id = @Id)
+    BEGIN
+        RAISERROR('El producto con el ID especificado no existe.', 16, 1);
+        RETURN;
+    END
+
+    -- Eliminar el producto
+    DELETE FROM Producto
+    WHERE Id = @Id;
+END;
+
+--
+
+CREATE PROCEDURE AlternarEstadoProducto
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Verificar si el producto existe
+    IF NOT EXISTS (SELECT 1 FROM Producto WHERE Id = @Id)
+    BEGIN
+        RAISERROR('El producto con el ID especificado no existe.', 16, 1);
+        RETURN;
+    END
+
+    -- Alternar el estado (0 -> 1, 1 -> 0)
+    UPDATE Producto
+    SET Estado = CASE WHEN Estado = 1 THEN 0 ELSE 1 END
+    WHERE Id = @Id;
+
+    -- Opcional: devolver el nuevo estado
+    SELECT * FROM Producto WHERE Id = @Id;
+END;
+
+
+select * from Usuarios
+select * from Categoria
+select * from Producto
+select * from Cliente
+SELECT * FROM Cliente WHERE UsuarioId = 3
+select * from Boleta
+
+
+EXEC AlternarEstadoProducto @Id = 7;
+
+SELECT 
+    b.Id AS BoletaId,
+    b.FechaEmision,
+	c.Nombre,
+	c.Apellido,
+    b.Total,
+    d.Cantidad,
+    d.PrecioUnitario,
+    d.Subtotal,
+    p.Nombre AS NombreProducto
+FROM Boleta b
+INNER JOIN DetalleBoleta d ON b.Id = d.BoletaId
+INNER JOIN Producto p ON d.ProductoId = p.Id
+INNER JOIN Cliente c ON b.ClienteId = c.Id
+WHERE b.ClienteId = 1
+ORDER BY b.FechaEmision DESC
+
+select * from Producto where Estado = 1 and CategoriaId = 1

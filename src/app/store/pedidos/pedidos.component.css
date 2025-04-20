@@ -1,0 +1,78 @@
+/* Custom styles for the boleta template */
+.card {
+    border-radius: 0px;
+    transition: transform 0.2s;
+    background-color: rgb(255, 203, 207);
+  }
+    
+  .card-header {
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+    background-color: rgb(103, 29, 40)!important;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+    padding: 0.5em 1em;
+  }
+  
+  /* Animation for fade-in effect */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* Animation for table rows */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .animate-row {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .card-header h5 {
+      font-size: 1.1rem;
+    }
+    .badge {
+      font-size: 0.8rem;
+    }
+    .table th, .table td {
+      font-size: 0.9rem;
+    }
+  }

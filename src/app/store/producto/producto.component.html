@@ -1,0 +1,113 @@
+<!-- MAIN INICIO -->
+<div class="container text-center mt-5">
+  <h1 class="fs-1 fw-bold">{{ producto?.nombre }}</h1>
+  <h2 class="fs-2 fw-bold text-start subt">DATOS DEL PRODUCTO</h2>
+
+  <div class="container p-0 mt-4 bg-light">
+    <div class="d-flex flex-column justify-content-around flex-md-row">
+      <div class="text-start">
+        <img class="img-fluid" src="assets/images/image.png" alt="Producto" />
+      </div>
+
+      <div
+        class="text-start d-flex flex-column justify-content-between ms-3 fs-5 mt-2 mb-2"
+      >
+        <p><strong>Descripción del producto:</strong> {{ producto?.nombre }}</p>
+        <p>
+          <strong>Categoría del producto:</strong>
+          {{ producto?.categoria?.nombre }}
+        </p>
+        <p>
+          <strong>Precio regular:</strong> S./
+          {{ producto?.precio | number : "1.2-2" }}
+        </p>
+        <p><strong>Descuento:</strong> {{ producto?.descuento }}%</p>
+        <p>
+          <strong>Precio con descuento:</strong>
+          S./
+          {{
+            (producto?.precio ?? 0) -
+              ((producto?.precio ?? 0) * (producto?.descuento ?? 0)) / 100
+              | number : "1.2-2"
+          }}
+        </p>
+        <p><strong>Stock:</strong> {{ producto?.stock }} unidades</p>
+        <form (ngSubmit)="agregarAlCarrito(cantidadInput.value)">
+          <p>
+            <strong>Unidades a comprar:</strong>
+            <input
+              #cantidadInput
+              class="text-center input-number-custom fw-bold"
+              type="number"
+              [value]="1"
+              min="1"
+              [max]="producto?.stock"
+            />
+          </p>
+
+          <p class="{{cssMensaje}}" *ngIf="mensaje">{{ mensaje }}</p>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-custom">
+              Agregar al carrito
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <h2 class="fs-2 fw-bold text-start subt">PRODUCTOS SIMILARES</h2>
+    <div class="container-fluid main-grid bg-light pt-1">
+      <div class="container mt-4">
+        <ul class="article-grid">
+          <!--COMPONENTE-->
+          <li
+            *ngFor="let producto of productosSimilares"
+            class="card card-custom overflow-hidden"
+          >
+            <!-- Badge de descuento -->
+            <div *ngIf="producto.descuento" class="discount-badge rounded-pill">
+              <span>{{ producto.descuento }}% OFF</span>
+            </div>
+
+            <!-- Imagen -->
+            <img src="assets/images/image.png" alt="{{ producto.nombre }}" />
+
+            <div class="card-body cb">
+              <!-- Nombre del producto -->
+              <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
+
+              <!-- Precio -->
+              <p class="text-dark font-monospace fs-4">
+                <span *ngIf="producto.descuento" class="precio-anterior">
+                  S/.{{ producto.precio | number : "1.2-2" }}
+                </span>
+                <strong>
+                  S/.
+                  {{
+                    producto.descuento
+                      ? producto.precio * (1 - producto.descuento / 100)
+                      : (producto.precio | number : "1.2-2")
+                  }}
+                </strong>
+              </p>
+
+              <!-- Botón -->
+              <a
+                class="btn btn-custom rounded-pill"
+                [routerLink]="'/inicio/producto/' + producto.id"
+              >
+                COMPRAR
+              </a>
+            </div>
+          </li>
+          <!--FIN COMPONENTE-->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN FIN -->
