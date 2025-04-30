@@ -22,7 +22,7 @@
             <span>{{ producto.descuento }}% OFF</span>
           </div>
 
-          <img src="assets/images/image.png" class="" [alt]="producto.nombre" />
+          <img src="https://localhost:7161/uploads/{{producto.id}}.png" class="" [alt]="producto.nombre" />
 
           <div class="card-body cb">
             <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
@@ -72,7 +72,7 @@
           </div>
 
           <!-- Imagen -->
-          <img src="assets/images/image.png" alt="{{ producto.nombre }}" />
+          <img src="https://localhost:7161/uploads/{{producto.id}}.png" alt="{{ producto.nombre }}" />
 
           <div class="card-body cb">
             <!-- Nombre del producto -->

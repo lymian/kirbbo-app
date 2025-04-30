@@ -35,7 +35,7 @@
             <!-- Ejemplo de un producto -->
             <tr *ngFor="let detalle of carrito" class="text-center">
               <th scope="row">
-                <img class="img-cart" src="assets/images/image.png" alt="" />
+                <img class="img-cart" src="https://localhost:7161/uploads/{{detalle.producto.id}}.png" alt="" />
               </th>
               <td>{{ detalle.producto.nombre }}</td>
               <td>S/{{ detalle.producto.precio | number : "1.2-2" }}</td>
@@ -159,7 +159,10 @@
           </div>
 
           <!-- Imagen -->
-          <img src="assets/images/image.png" alt="{{ producto.nombre }}" />
+          <img
+            src="https://localhost:7161/uploads/{{ producto.id }}.png"
+            alt="{{ producto.nombre }}"
+          />
 
           <div class="card-body cb">
             <!-- Nombre del producto -->

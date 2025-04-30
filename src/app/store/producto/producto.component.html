@@ -6,7 +6,11 @@
   <div class="container p-0 mt-4 bg-light">
     <div class="d-flex flex-column justify-content-around flex-md-row">
       <div class="text-start">
-        <img class="img-fluid" src="assets/images/image.png" alt="Producto" />
+        <img
+          class="img-fluid"
+          src="https://localhost:7161/uploads/{{ producto?.id }}.png"
+          alt="Producto"
+        />
       </div>
 
       <div
@@ -45,7 +49,7 @@
             />
           </p>
 
-          <p class="{{cssMensaje}}" *ngIf="mensaje">{{ mensaje }}</p>
+          <p class="{{ cssMensaje }}" *ngIf="mensaje">{{ mensaje }}</p>
 
           <div class="text-center">
             <button type="submit" class="btn btn-custom">
@@ -73,7 +77,10 @@
             </div>
 
             <!-- Imagen -->
-            <img src="assets/images/image.png" alt="{{ producto.nombre }}" />
+            <img
+              src="https://localhost:7161/uploads/{{ producto.id }}.png"
+              alt="{{ producto.nombre }}"
+            />
 
             <div class="card-body cb">
               <!-- Nombre del producto -->
