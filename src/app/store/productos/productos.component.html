@@ -4,7 +4,7 @@
   <div class="d-flex overflow-auto mt-3 mb-3 categorias">
     <!-- Botón de "Todo" -->
     <a
-      class="btn btn-custom mb-3 me-2"
+      class="btn btn-custom mb-3 me-2 categoria fw-bold"
       [routerLink]="'/inicio/productos'"
       [ngClass]="{ active: !categoriaSeleccionada }"
     >
@@ -14,68 +14,16 @@
     <!-- Botones de categorías -->
     <a
       *ngFor="let categoria of categorias"
-      class="btn btn-custom mb-3 me-2"
-      [routerLink]="'/inicio/categoria/' + categoria.id"
+      class="btn btn-custom mb-3 me-2 categoria fw-bold"
+      [routerLink]="'/inicio/productos/categoria/' + categoria.id"
       [ngClass]="{ active: categoriaSeleccionada?.id === categoria.id }"
     >
       {{ categoria.nombre }}
     </a>
   </div>
-  <div class="mt-5">
-    <h2 class="fs-2 fw-bold text-start subt">
-      {{ categoriaSeleccionada?.nombre || "Todos los productos" | uppercase }}
-    </h2>
-    <div class="container-fluid main-grid bg-light pt-1">
-      <div class="container mt-4">
-        <ul class="article-grid">
-          <!--COMPONENTE-->
-          <li
-            *ngFor="let producto of productos"
-            class="card card-custom overflow-hidden"
-          >
-            <!-- Badge de descuento -->
-            <div *ngIf="producto.descuento" class="discount-badge rounded-pill">
-              <span>{{ producto.descuento }}% OFF</span>
-            </div>
-
-            <!-- Imagen -->
-            <img
-              src="https://localhost:7161/uploads/{{ producto.id }}.png"
-              alt="{{ producto.nombre }}"
-            />
-
-            <div class="card-body cb">
-              <!-- Nombre del producto -->
-              <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
-
-              <!-- Precio -->
-              <p class="text-dark font-monospace fs-4">
-                <span *ngIf="producto.descuento" class="precio-anterior">
-                  S/.{{ producto.precio | number : "1.2-2" }}
-                </span>
-                <strong>
-                  S/.
-                  {{
-                    producto.descuento
-                      ? producto.precio * (1 - producto.descuento / 100)
-                      : (producto.precio | number : "1.2-2")
-                  }}
-                </strong>
-              </p>
-
-              <!-- Botón -->
-              <a
-                class="btn btn-custom rounded-pill"
-                [routerLink]="'/inicio/producto/' + producto.id"
-              >
-                COMPRAR
-              </a>
-            </div>
-          </li>
-          <!--FIN COMPONENTE-->
-        </ul>
-      </div>
-    </div>
-  </div>
 </div>
 <!-- MAIN FIN -->
+<app-lista-producto
+  [titulo]="titulo"
+  [productos]="productos"
+></app-lista-producto>

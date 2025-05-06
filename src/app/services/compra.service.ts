@@ -7,6 +7,17 @@ interface DetalleCompra {
   cantidad: number;
 }
 
+interface Pedido {
+  boletaId: number;
+  nombreCliente: string;
+  apellidoCliente: string;
+  fechaEmision: string;
+  total: number;
+  detalles: DetalleCompra[];
+  direccion: string;
+  estado: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +26,7 @@ export class CompraService {
 
   constructor(private http: HttpClient) { }
 
-  realizarCompra(): Observable<any> {
+  realizarCompra(direccion: string): Observable<any> {
     const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
 
     const detalles: DetalleCompra[] = carrito.map((item: any) => ({
@@ -23,7 +34,10 @@ export class CompraService {
       cantidad: item.cantidad
     }));
 
-    const body = { detalles };
+    const body = {
+      direccion: direccion,
+      detalles: detalles
+    };
 
     return this.http.post(this.apiUrl, body);
   }

@@ -58,11 +58,28 @@
             </tbody>
           </table>
         </div>
-      </div>
-
-      <!-- Card Footer -->
-      <div class="card-footer text-muted text-end">
-        <small>Generado por Sistema de Ventas</small>
+        <!-- Direccion de envio-->
+        <div class="mt-3 text-start">
+          <h5 class="mb-1">Dirección de Envío:</h5>
+          <p class="mb-1">{{ boleta.direccion }}</p>
+        </div>
+        <!-- Estado del pedido 0=pendiente, 1=finalizado-->
+        <div class="mt-3 text-start">
+          <h5 class="mb-1">Estado del Pedido:</h5>
+          <p
+            class="mb-1"
+            [ngClass]="{
+              'text-success': boleta.estado === 1,
+              'text-danger': boleta.estado === 0
+            }"
+          >
+            {{ boleta.estado === 0 ? "Pendiente" : "Finalizado" }}
+          </p>
+        </div>
+        <!-- Card Footer -->
+        <div class="card-footer text-muted text-end">
+          <small>Generado por Sistema de Ventas</small>
+        </div>
       </div>
     </div>
   </div>

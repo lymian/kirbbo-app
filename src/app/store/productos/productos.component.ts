@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { ProductoService, Producto, Categoria } from '../../services/producto.service';
 import { ActivatedRoute } from '@angular/router';
+import { ListaProductoComponent } from '../../components/lista-producto/lista-producto.component';
 
 @Component({
   selector: 'app-productos',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ListaProductoComponent],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css'
 })
@@ -14,6 +15,7 @@ export class ProductosComponent implements OnInit {
   categorias: Categoria[] = [];
   productos: Producto[] = [];
   categoriaSeleccionada: Categoria | null = null;
+  titulo: string = 'TODOS LOS PRODUCTOS';
 
   constructor(
     private productoService: ProductoService,
@@ -35,6 +37,7 @@ export class ProductosComponent implements OnInit {
             const id = +idCategoria;
             this.categoriaSeleccionada = categorias.find(c => c.id === id) || null;
             this.cargarProductosPorCategoria(id);
+            this.titulo = this.categoriaSeleccionada?.nombre?.toUpperCase() || 'TODOS LOS PRODUCTOS';
           } else {
             this.categoriaSeleccionada = null;
             this.cargarProductos();
@@ -64,5 +67,9 @@ export class ProductosComponent implements OnInit {
       next: (data) => this.productos = data,
       error: (err) => console.error('Error al obtener productos por categoría', err)
     });
+  }
+  imgError(event: Event) {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/images/not-found.png'; // Ruta local a la imagen por defecto
   }
 }

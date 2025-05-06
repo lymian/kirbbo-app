@@ -69,11 +69,11 @@ body {
 }
 /**/
 .custom-banner {
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(255, 203, 207);
   color: rgb(0, 0, 0);
 }
 .banner {
-  background-color: rgb(243, 243, 243);
+  background-color: rgb(255, 203, 207);
 }
 .banner1 {
   align-content: center;
@@ -276,6 +276,6 @@ body {
 .swal-image-on-top {
   order: 0; /* Mueve la imagen arriba */
 }
-.kirbi{
+.kirbi {
   background-color: rgb(244, 204, 204);
 }

@@ -11,11 +11,14 @@ import { PedidosComponent } from './store/pedidos/pedidos.component';
 
 export const routes: Routes = [
     {
+        path: '', redirectTo: 'inicio', pathMatch: 'full'
+    },
+    {
         path: 'inicio', component: StoreComponent, children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'productos', component: ProductosComponent },
-            { path: 'categoria/:id', component: ProductosComponent },
+            { path: 'productos/categoria/:id', component: ProductosComponent },
             { path: 'producto/:id', component: ProductoComponent },
             { path: 'carrito', component: CarritoComponent },
             { path: 'login', component: LoginComponent },

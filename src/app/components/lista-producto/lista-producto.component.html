@@ -1,0 +1,17 @@
+<div class="mt-5 container">
+  <h2 class="fs-2 fw-bold text-start subt">
+    {{ titulo }}
+  </h2>
+  <div class="container-fluid main-grid bg-light pt-1">
+    <div class="container mt-4">
+      <ul class="article-grid">
+        <!--COMPONENTE-->
+        <app-card-producto
+          *ngFor="let producto of productos"
+          [producto]="producto"
+        ></app-card-producto>
+        <!--FIN COMPONENTE-->
+      </ul>
+    </div>
+  </div>
+</div>

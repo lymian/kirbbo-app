@@ -71,4 +71,8 @@ export class ProductoComponent implements OnInit {
       this.cssMensaje = 'text-danger ms-2 fw-bold';
     }
   }
+  imgError(event: Event) {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/images/not-found.png'; // Ruta local a la imagen por defecto
+  }
 }

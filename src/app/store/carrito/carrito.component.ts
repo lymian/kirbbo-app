@@ -7,22 +7,28 @@ import Swal from 'sweetalert2';
 import { ProductoService } from '../../services/producto.service';
 import { Router, RouterLink } from '@angular/router';
 import { CompraService } from '../../services/compra.service';
+import { AuthClienteService } from '../../services/auth-cliente.service';
+import { ListaProductoComponent } from '../../components/lista-producto/lista-producto.component';
 
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ListaProductoComponent],
 })
 export class CarritoComponent implements OnInit {
   carrito: CarritoItem[] = [];
   direccion: string = '';
   mensaje: string = '';
   productosDestacados: Producto[] = [];
+  titulo: string = 'RECOMENDADOS';
+
+  logeado: boolean = false;
 
   constructor(private carritoService: CarritoService,
     private productoService: ProductoService,
     private compraService: CompraService,
-    private router: Router) { }
+    private router: Router,
+    private authClienteService: AuthClienteService) { }
 
   ngOnInit(): void {
     const carritoStorage = localStorage.getItem('carrito');
@@ -36,7 +42,8 @@ export class CarritoComponent implements OnInit {
         console.error('Error al cargar productos destacados', error);
       }
     );
-
+    // Verificar si el usuario está logueado
+    this.logeado = this.authClienteService.isLoggedIn();
   }
 
   calcularPrecioFinal(producto: Producto): number {
@@ -103,13 +110,6 @@ export class CarritoComponent implements OnInit {
     localStorage.setItem('carrito', JSON.stringify(this.carrito));
   }
 
-  procesarOrden() {
-    // Aquí iría el envío al backend
-    this.mensaje = 'Compra procesada correctamente. 🎉';
-    localStorage.removeItem('carrito');
-    this.carrito = [];
-  }
-
   resetDireccion() {
     this.direccion = 'Av. Ejemplo 123';
   }
@@ -124,7 +124,34 @@ export class CarritoComponent implements OnInit {
   }
 
   procesarCompra() {
-    this.compraService.realizarCompra().subscribe({
+    console.log('Dirección de envío:', this.direccion);
+    if (!this.direccion) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Dirección requerida',
+        text: 'Por favor, ingresa una dirección de envío.',
+      });
+      return;
+    }
+
+    if (this.carrito.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Carrito vacío',
+        text: 'No hay productos en el carrito.',
+      });
+      return;
+    }
+
+    if (!this.logeado) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Iniciar sesión',
+        text: 'Debes iniciar sesión para realizar la compra.',
+      });
+      return;
+    }
+    this.compraService.realizarCompra(this.direccion).subscribe({
       next: (res) => {
         console.log('Compra realizada con éxito:', res);
         localStorage.removeItem('carrito'); // Limpiar carrito después de realizar la compra
@@ -148,5 +175,9 @@ export class CarritoComponent implements OnInit {
         });
       }
     });
+  }
+  imgError(event: Event) {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/images/not-found.png'; // Ruta local a la imagen por defecto
   }
 }

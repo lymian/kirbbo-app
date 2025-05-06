@@ -35,7 +35,14 @@
             <!-- Ejemplo de un producto -->
             <tr *ngFor="let detalle of carrito" class="text-center">
               <th scope="row">
-                <img class="img-cart" src="https://localhost:7161/uploads/{{detalle.producto.id}}.png" alt="" />
+                <img
+                  class="img-cart"
+                  src="https://localhost:7161/uploads/{{
+                    detalle.producto.id
+                  }}.png"
+                  alt=""
+                  (error)="imgError($event)"
+                />
               </th>
               <td>{{ detalle.producto.nombre }}</td>
               <td>S/{{ detalle.producto.precio | number : "1.2-2" }}</td>
@@ -101,26 +108,23 @@
                         name="address"
                         class="text-center input-dic-custom fw-bold"
                         type="text"
-                        value="Av. Ejemplo 123"
+                        [(ngModel)]="direccion"
+                        placeholder="Ingrese dirección de envío..."
                         required
                       />
-                      <button type="submit" class="btn btn-warning ms-2">
-                        Editar
-                      </button>
-                    </form>
-                    <form action="reestablecerPedidoAddress" method="post">
-                      <button type="submit" class="btn btn-secondary ms-2">
-                        Reestablecer
-                      </button>
                     </form>
                   </div>
                 </th>
-                <th>3</th>
+                <th>{{ carrito.length }}</th>
                 <td class="fw-bold">
                   S/.{{ calcularTotal() | number : "1.2-2" }}
                 </td>
                 <td>
-                  <button class="btn btn-success" (click)="procesarCompra()">
+                  <button
+                    [disabled]="!logeado"
+                    class="btn btn-success"
+                    (click)="procesarCompra()"
+                  >
                     Procesar compra
                   </button>
                 </td>
@@ -129,71 +133,17 @@
           </table>
         </div>
       </div>
-
-      <!-- Mensaje adicional -->
-      <div class="alert alert-dark">Mensaje adicional aquí</div>
-
       <!-- Si no ha iniciado sesión -->
-      <div class="alert alert-info text-center" role="alert">
-        Debe <a href="#" class="alert-link">Iniciar Sesión</a> para poder
-        procesar su orden.
+      <div *ngIf="!logeado" class="alert alert-info text-center" role="alert">
+        Debe
+        <a class="alert-link" routerLink="/inicio/login">Iniciar Sesión</a> para
+        poder procesar su orden.
       </div>
     </div>
   </div>
 </div>
 <!-- MAIN FIN -->
-
-<div class="container text-center mt-5">
-  <h2 class="fs-2 fw-bold text-start subt">RECOMENDADOS</h2>
-  <div class="container-fluid main-grid">
-    <div class="container mt-5">
-      <ul class="article-grid">
-        <!--COMPONENTE-->
-        <li
-          *ngFor="let producto of productosDestacados"
-          class="card card-custom overflow-hidden"
-        >
-          <!-- Badge de descuento -->
-          <div *ngIf="producto.descuento" class="discount-badge rounded-pill">
-            <span>{{ producto.descuento }}% OFF</span>
-          </div>
-
-          <!-- Imagen -->
-          <img
-            src="https://localhost:7161/uploads/{{ producto.id }}.png"
-            alt="{{ producto.nombre }}"
-          />
-
-          <div class="card-body cb">
-            <!-- Nombre del producto -->
-            <h5 class="card-title fs-3 fw-bold">{{ producto.nombre }}</h5>
-
-            <!-- Precio -->
-            <p class="text-dark font-monospace fs-4">
-              <span *ngIf="producto.descuento" class="precio-anterior">
-                S/.{{ producto.precio | number : "1.2-2" }}
-              </span>
-              <strong>
-                S/.
-                {{
-                  producto.descuento
-                    ? producto.precio * (1 - producto.descuento / 100)
-                    : (producto.precio | number : "1.2-2")
-                }}
-              </strong>
-            </p>
-
-            <!-- Botón -->
-            <a
-              class="btn btn-custom rounded-pill"
-              [routerLink]="'/inicio/producto/' + producto.id"
-            >
-              COMPRAR
-            </a>
-          </div>
-        </li>
-        <!--FIN COMPONENTE-->
-      </ul>
-    </div>
-  </div>
-</div>
+<app-lista-producto
+  [titulo]="titulo"
+  [productos]="productosDestacados"
+></app-lista-producto>

@@ -7,9 +7,11 @@
     <div class="d-flex flex-column justify-content-around flex-md-row">
       <div class="text-start">
         <img
+          *ngIf="producto"
           class="img-fluid"
-          src="https://localhost:7161/uploads/{{ producto?.id }}.png"
+          [src]="'https://localhost:7161/uploads/' + producto.id + '.png'"
           alt="Producto"
+          (error)="imgError($event)"
         />
       </div>
 
@@ -38,7 +40,7 @@
         <p><strong>Stock:</strong> {{ producto?.stock }} unidades</p>
         <form (ngSubmit)="agregarAlCarrito(cantidadInput.value)">
           <p>
-            <strong>Unidades a comprar:</strong>
+            <strong>Unidades a comprar: </strong>
             <input
               #cantidadInput
               class="text-center input-number-custom fw-bold"
@@ -80,6 +82,7 @@
             <img
               src="https://localhost:7161/uploads/{{ producto.id }}.png"
               alt="{{ producto.nombre }}"
+              (error)="imgError($event)"
             />
 
             <div class="card-body cb">
