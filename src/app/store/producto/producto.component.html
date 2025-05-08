@@ -9,7 +9,7 @@
         <img
           *ngIf="producto"
           class="img-fluid"
-          [src]="'https://localhost:7161/uploads/' + producto.id + '.png'"
+          [src]="'https://localhost:44356/uploads/' + producto.id + '.png'"
           alt="Producto"
           (error)="imgError($event)"
         />
@@ -80,7 +80,7 @@
 
             <!-- Imagen -->
             <img
-              src="https://localhost:7161/uploads/{{ producto.id }}.png"
+              src="https://localhost:44356/uploads/{{ producto.id }}.png"
               alt="{{ producto.nombre }}"
               (error)="imgError($event)"
             />

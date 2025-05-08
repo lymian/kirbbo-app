@@ -22,7 +22,7 @@ interface Pedido {
   providedIn: 'root'
 })
 export class CompraService {
-  private apiUrl = 'https://localhost:7161/kirbbo/compra';
+  private apiUrl = 'https://localhost:44356/kirbbo/compra';
 
   constructor(private http: HttpClient) { }
 
