@@ -17,7 +17,7 @@ export interface RegistroRequest {
   providedIn: 'root'
 })
 export class AuthClienteService {
-  private apiUrl = 'https://localhost:44356/kirbbo/auth';
+  private apiUrl = 'https://apikirbbo-hugxdudhgfgac5b0.chilecentral-01.azurewebsites.net/kirbbo/auth';
   private nombreUsuarioSubject = new BehaviorSubject<string | null>(null);
   nombreUsuario$ = this.nombreUsuarioSubject.asObservable();
 
