@@ -30,7 +30,7 @@ export interface CarritoItem {
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'https://apikirbbo-hugxdudhgfgac5b0.chilecentral-01.azurewebsites.net/kirbbo/'; // Cambia el puerto si es distinto
+  private apiUrl = 'http://68.211.176.134:81/kirbbo/'; // Cambia el puerto si es distinto
 
   constructor(private http: HttpClient) { }
 

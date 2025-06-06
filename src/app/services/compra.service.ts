@@ -22,7 +22,7 @@ interface Pedido {
   providedIn: 'root'
 })
 export class CompraService {
-  private apiUrl = 'https://apikirbbo-hugxdudhgfgac5b0.chilecentral-01.azurewebsites.net/kirbbo/compra';
+  private apiUrl = 'http://68.211.176.134:81/kirbbo/compra';
 
   constructor(private http: HttpClient) { }
 

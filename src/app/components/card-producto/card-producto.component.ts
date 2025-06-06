@@ -14,7 +14,7 @@ export class CardProductoComponent implements OnInit {
   imagenUrl: string = '';
 
   ngOnInit() {
-    this.imagenUrl = `https://apikirbbo-hugxdudhgfgac5b0.chilecentral-01.azurewebsites.net/uploads/${this.producto.id}.png`;
+    this.imagenUrl = `http://68.211.176.134:81/uploads/${this.producto.id}.png`;
   }
 
   imgAttempts = new WeakMap<HTMLImageElement, number>();
