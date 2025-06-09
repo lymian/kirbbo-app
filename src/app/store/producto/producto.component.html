@@ -9,7 +9,7 @@
         <img
           *ngIf="producto"
           class="img-fluid"
-          [src]="'https://apikirbbo-hugxdudhgfgac5b0.chilecentral-01.azurewebsites.net/uploads/' + producto.id + '.png'"
+          [src]="'https://api.kirbbo.lymian.xyz/uploads/' + producto.id + '.png'"
           alt="Producto"
           (error)="imgError($event)"
         />
@@ -80,7 +80,7 @@
 
             <!-- Imagen -->
             <img
-              src="https://apikirbbo-hugxdudhgfgac5b0.chilecentral-01.azurewebsites.net/uploads/{{ producto.id }}.png"
+              src="https://api.kirbbo.lymian.xyz/uploads/{{ producto.id }}.png"
               alt="{{ producto.nombre }}"
               (error)="imgError($event)"
             />

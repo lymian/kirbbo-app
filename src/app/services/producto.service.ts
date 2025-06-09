@@ -30,7 +30,7 @@ export interface CarritoItem {
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'http://68.211.176.134:81/kirbbo/'; // Cambia el puerto si es distinto
+  private apiUrl = 'https://api.kirbbo.lymian.xyz/kirbbo/'; // Cambia el puerto si es distinto
 
   constructor(private http: HttpClient) { }
 

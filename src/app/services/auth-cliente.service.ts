@@ -17,7 +17,7 @@ export interface RegistroRequest {
   providedIn: 'root'
 })
 export class AuthClienteService {
-  private apiUrl = 'http://68.211.176.134:81/kirbbo/auth';
+  private apiUrl = 'https://api.kirbbo.lymian.xyz/kirbbo/auth';
   private nombreUsuarioSubject = new BehaviorSubject<string | null>(null);
   nombreUsuario$ = this.nombreUsuarioSubject.asObservable();
 
